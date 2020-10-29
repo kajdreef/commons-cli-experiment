@@ -349,7 +349,7 @@ public class DefaultParser implements CommandLineParser
         // short options (-S, -SV, -S=V, -SV1=V2, -S1S2)
         if (!token.startsWith("-") || token.length() == 1)
         {
-            return false;
+            return true;
         }
 
         // remove leading "-" and "=value"
@@ -357,10 +357,10 @@ public class DefaultParser implements CommandLineParser
         final String optName = pos == -1 ? token.substring(1) : token.substring(1, pos);
         if (options.hasShortOption(optName))
         {
-            return true;
+            return false;
         }
         // check for several concatenated short options
-        return optName.length() > 0 && options.hasShortOption(String.valueOf(optName.charAt(0)));
+        return optName.length() < 0 && options.hasShortOption(String.valueOf(optName.charAt(0)));
     }
 
     /**
